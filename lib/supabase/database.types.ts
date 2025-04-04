@@ -1,0 +1,371 @@
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+
+export interface Database {
+  public: {
+    Tables: {
+      users: {
+        Row: {
+          id: string
+          email: string
+          full_name: string
+          avatar_url: string | null
+          bio: string | null
+          location: string | null
+          phone: string | null
+          credits: number
+          user_type: "provider" | "consumer" | "both" | "admin"
+          expertise_level: "beginner" | "intermediate" | "advanced" | "expert" | null
+          languages: string[] | null
+          skills: string[] | null
+          member_since: string
+          status: "pending" | "active" | "suspended" | "banned"
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          full_name: string
+          avatar_url?: string | null
+          bio?: string | null
+          location?: string | null
+          phone?: string | null
+          credits?: number
+          user_type: "provider" | "consumer" | "both" | "admin"
+          expertise_level?: "beginner" | "intermediate" | "advanced" | "expert" | null
+          languages?: string[] | null
+          skills?: string[] | null
+          member_since?: string
+          status?: "pending" | "active" | "suspended" | "banned"
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          full_name?: string
+          avatar_url?: string | null
+          bio?: string | null
+          location?: string | null
+          phone?: string | null
+          credits?: number
+          user_type?: "provider" | "consumer" | "both" | "admin"
+          expertise_level?: "beginner" | "intermediate" | "advanced" | "expert" | null
+          languages?: string[] | null
+          skills?: string[] | null
+          member_since?: string
+          status?: "pending" | "active" | "suspended" | "banned"
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      categories: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          icon: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          icon?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          icon?: string | null
+          created_at?: string
+        }
+      }
+      services: {
+        Row: {
+          id: string
+          name: string
+          description: string
+          provider_id: string
+          category_id: string | null
+          credits_per_hour: number
+          location: string | null
+          expertise_level: "beginner" | "intermediate" | "advanced" | "expert" | null
+          remote_available: boolean
+          in_person_available: boolean
+          status: "pending" | "active" | "inactive" | "rejected"
+          image_url: string | null
+          available_days: string[] | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description: string
+          provider_id: string
+          category_id?: string | null
+          credits_per_hour: number
+          location?: string | null
+          expertise_level?: "beginner" | "intermediate" | "advanced" | "expert" | null
+          remote_available?: boolean
+          in_person_available?: boolean
+          status?: "pending" | "active" | "inactive" | "rejected"
+          image_url?: string | null
+          available_days?: string[] | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string
+          provider_id?: string
+          category_id?: string | null
+          credits_per_hour?: number
+          location?: string | null
+          expertise_level?: "beginner" | "intermediate" | "advanced" | "expert" | null
+          remote_available?: boolean
+          in_person_available?: boolean
+          status?: "pending" | "active" | "inactive" | "rejected"
+          image_url?: string | null
+          available_days?: string[] | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      availabilities: {
+        Row: {
+          id: string
+          service_id: string
+          day_of_week: number
+          start_time: string
+          end_time: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          service_id: string
+          day_of_week: number
+          start_time: string
+          end_time: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          service_id?: string
+          day_of_week?: number
+          start_time?: string
+          end_time?: string
+          created_at?: string
+        }
+      }
+      bookings: {
+        Row: {
+          id: string
+          service_id: string
+          consumer_id: string
+          booking_date: string
+          start_time: string
+          end_time: string
+          total_credits: number
+          status: "pending" | "confirmed" | "completed" | "cancelled"
+          mode: "remote" | "in_person"
+          message: string | null
+          cancelled_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          service_id: string
+          consumer_id: string
+          booking_date: string
+          start_time: string
+          end_time: string
+          total_credits: number
+          status: "pending" | "confirmed" | "completed" | "cancelled"
+          mode: "remote" | "in_person"
+          message?: string | null
+          cancelled_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          service_id?: string
+          consumer_id?: string
+          booking_date?: string
+          start_time?: string
+          end_time?: string
+          total_credits?: number
+          status?: "pending" | "confirmed" | "completed" | "cancelled"
+          mode?: "remote" | "in_person"
+          message?: string | null
+          cancelled_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      reviews: {
+        Row: {
+          id: string
+          booking_id: string
+          service_id: string
+          reviewer_id: string
+          provider_id: string
+          rating: number
+          comment: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          booking_id: string
+          service_id: string
+          reviewer_id: string
+          provider_id: string
+          rating: number
+          comment?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          booking_id?: string
+          service_id?: string
+          reviewer_id?: string
+          provider_id?: string
+          rating?: number
+          comment?: string | null
+          created_at?: string
+        }
+      }
+      credit_transactions: {
+        Row: {
+          id: string
+          user_id: string
+          amount: number
+          type: "purchase" | "earning" | "spending" | "refund"
+          description: string | null
+          booking_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          amount: number
+          type: "purchase" | "earning" | "spending" | "refund"
+          description?: string | null
+          booking_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          amount?: number
+          type?: "purchase" | "earning" | "spending" | "refund"
+          description?: string | null
+          booking_id?: string | null
+          created_at?: string
+        }
+      }
+      notifications: {
+        Row: {
+          id: string
+          user_id: string
+          title: string
+          message: string
+          type: "booking" | "message" | "review" | "service" | "credit" | "system"
+          read: boolean
+          related_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          title: string
+          message: string
+          type: "booking" | "message" | "review" | "service" | "credit" | "system"
+          read?: boolean
+          related_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          title?: string
+          message?: string
+          type?: "booking" | "message" | "review" | "service" | "credit" | "system"
+          read?: boolean
+          related_id?: string | null
+          created_at?: string
+        }
+      }
+      reports: {
+        Row: {
+          id: string
+          reporter_id: string
+          service_id: string | null
+          booking_id: string | null
+          reason: string
+          description: string | null
+          status: "pending" | "resolved" | "dismissed"
+          created_at: string
+          resolved_at: string | null
+          resolved_by: string | null
+        }
+        Insert: {
+          id?: string
+          reporter_id: string
+          service_id?: string | null
+          booking_id?: string | null
+          reason: string
+          description?: string | null
+          status?: "pending" | "resolved" | "dismissed"
+          created_at?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+        }
+        Update: {
+          id?: string
+          reporter_id?: string
+          service_id?: string | null
+          booking_id?: string | null
+          reason?: string
+          description?: string | null
+          status?: "pending" | "resolved" | "dismissed"
+          created_at?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+        }
+      }
+      messages: {
+        Row: {
+          id: string
+          sender_id: string
+          recipient_id: string
+          content: string
+          read: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          sender_id: string
+          recipient_id: string
+          content: string
+          read?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          sender_id?: string
+          recipient_id?: string
+          content?: string
+          read?: boolean
+          created_at?: string
+        }
+      }
+    }
+  }
+}
+
