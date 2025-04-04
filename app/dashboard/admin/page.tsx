@@ -1,25 +1,35 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { DashboardLayout } from "@/components/dashboard-layout"
-import { AdminActions } from "@/components/admin/admin-actions"
-import { getSupabaseServer } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { DashboardLayout } from "@/components/dashboard-layout";
+import { AdminActions } from "@/components/admin/admin-actions";
+import { getSupabaseServer } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function AdminPage() {
-  const supabase = getSupabaseServer()
+  const supabase = getSupabaseServer();
   const {
     data: { session },
-  } = await supabase.auth.getSession()
+  } = await supabase.auth.getSession();
 
   if (!session) {
-    redirect("/")
+    redirect("/");
   }
-
+  //deployment
   // Vérifier si l'utilisateur est un administrateur
-  const { data: userData, error } = await supabase.from("users").select("user_type").eq("id", session.user.id).single()
+  const { data: userData, error } = await supabase
+    .from("users")
+    .select("user_type")
+    .eq("id", session.user.id)
+    .single();
 
   if (error || userData?.user_type !== "admin") {
     // Rediriger vers le tableau de bord si l'utilisateur n'est pas un administrateur
-    redirect("/dashboard")
+    redirect("/dashboard");
   }
 
   return (
@@ -28,7 +38,9 @@ export default async function AdminPage() {
         <Card>
           <CardHeader>
             <CardTitle>Administration</CardTitle>
-            <CardDescription>Outils d'administration pour la plateforme TrocSkill</CardDescription>
+            <CardDescription>
+              Outils d'administration pour la plateforme TrocSkill
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <AdminActions />
@@ -36,6 +48,5 @@ export default async function AdminPage() {
         </Card>
       </div>
     </DashboardLayout>
-  )
+  );
 }
-
